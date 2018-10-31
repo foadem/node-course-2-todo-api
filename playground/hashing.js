@@ -10,8 +10,8 @@ console.log(token);
 var decoded = jwt.verify(token, '123abc');
 console.log(decoded);
 
-// var message = 'I am number 3';
-// var hash = SHA256(message);
+// ar message = 'I am number 3';
+// var hash = SHA256(message).toString();
 
 // console.log(`message: ${message}`);
 // console.log(`hash: ${hash}`);
