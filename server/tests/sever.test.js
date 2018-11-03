@@ -4,22 +4,9 @@ const { ObjectID } = require('mongodb');
 
 const { app } = require('./../server');
 const { Todo } = require('./../models/todo');
+const {todos, populateTodos} = require('./seed/seed')
 
-var todos = [{
-    _id: new ObjectID(),
-    text: 'First test todo'
-}, {
-    _id: new ObjectID(),
-    text: 'Second test todo',
-    completed: true,
-    completedAt: 2221
-}];
-
-beforeEach((done) => {
-    Todo.deleteMany({}).then(() => {
-        return Todo.insertMany(todos);
-    }).then(() => done());
-});
+beforeEach(populateTodos);
 
 describe('POST /todos', () => {
     it('should create a new todo', (done) => {
@@ -56,7 +43,7 @@ describe('POST /todos', () => {
                 }
 
                 Todo.find().then((todos) => {
-                    expect(todos.length).toBe(2);
+                    expect(todos.length).toBe(3);
                     done();
                 }).catch((e) => done(e));
             })
@@ -69,7 +56,7 @@ describe('GET /todos', () => {
             .get('/todos')
             .expect(200)
             .expect((res) => {
-                expect(res.body.todos.length).toBe(2);
+                expect(res.body.todos.length).toBe(0);
             })
             .end(done);
     });
